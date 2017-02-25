@@ -10,6 +10,7 @@ RUN set -ex \
     libgmpxx \
     libxml2 \
     openssl \
+    procps \
     ruby \
     ruby-bigdecimal \
     ruby-bundler \
