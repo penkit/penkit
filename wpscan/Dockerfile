@@ -17,7 +17,6 @@ RUN set -ex \
     zlib \
   && apk add --no-cache --virtual .build-deps \
     build-base \
-    #curl-dev \
     git \
     gmp-dev \
     libffi-dev \
@@ -26,8 +25,8 @@ RUN set -ex \
     ruby-dev \
     zlib-dev \
   && git clone https://github.com/wpscanteam/wpscan.git /usr/src/wpscan \
-  && rm -rf /usr/src/wpscan/.git \
   && cd /usr/src/wpscan \
+  && rm -rf .git data.zip spec \
   && bundle install --without test \
   && apk del .build-deps \
   && /usr/src/wpscan/wpscan.rb --update --no-color
