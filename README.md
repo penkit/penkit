@@ -2,6 +2,15 @@
 
 Library of lightweight pen testing tools.
 
+## metasploit
+
+Usage:
+
+```bash
+docker run --rm -it --net=host penkit/tools:metasploit
+```
+
+
 ## sqlmap
 
 Usage:
