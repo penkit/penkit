@@ -1,0 +1,1 @@
+require "penkit/cli/penkit"
