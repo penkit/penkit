@@ -8,6 +8,8 @@ describe Penkit::CLI do
     expect(subject).to be_a(Thor)
   end
 
+  # Main
+
   describe "#ps" do
     it "calls docker#ps" do
       expect(docker).to receive(:ps).once.with(no_args)
@@ -51,6 +53,29 @@ describe Penkit::CLI do
         expect(docker).to receive(:stop).once.with(:a, :b, :c)
         subject.stop(:a, :b, :c)
       end
+    end
+  end
+
+  # Tools
+
+  describe "#metasploit" do
+    it "calls docker#run with arguments" do
+      expect(docker).to receive(:run).once.with("cli:metasploit", :a, :b, :c)
+      subject.metasploit(:a, :b, :c)
+    end
+  end
+
+  describe "#sqlmap" do
+    it "calls docker#run with arguments" do
+      expect(docker).to receive(:run).once.with("cli:sqlmap", :a, :b, :c)
+      subject.sqlmap(:a, :b, :c)
+    end
+  end
+
+  describe "#metasploit" do
+    it "calls docker#run with arguments" do
+      expect(docker).to receive(:run).once.with("cli:wpscan", :a, :b, :c)
+      subject.wpscan(:a, :b, :c)
     end
   end
 end

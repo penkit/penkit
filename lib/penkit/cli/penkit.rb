@@ -29,5 +29,22 @@ module Penkit
         Penkit::Docker.new.stop_all
       end
     end
+
+    # Tools
+
+    desc "metasploit [ARGS...]", "Run metasploit on the penkit docker network"
+    def metasploit(*args)
+      Penkit::Docker.new.run("cli:metasploit", *args)
+    end
+
+    desc "sqlmap [ARGS...]", "Run sqlmap on the penkit docker network"
+    def sqlmap(*args)
+      Penkit::Docker.new.run("cli:sqlmap", *args)
+    end
+
+    desc "wpscan [ARGS...]", "Run wpscan on the penkit docker network"
+    def wpscan(*args)
+      Penkit::Docker.new.run("cli:wpscan", *args)
+    end
   end
 end
