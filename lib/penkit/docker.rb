@@ -16,6 +16,11 @@ module Penkit
       rm(*containers) if containers.any?
     end
 
+    def run(image, *args)
+      create_network!
+      exec("docker", "run", "--rm", "-it", *run_options, "#{REPOSITORY}/#{image}", *args)
+    end
+
     def start(image)
       create_network!
       exec("docker", "run", "--detach", *run_options, "#{REPOSITORY}/#{image}")

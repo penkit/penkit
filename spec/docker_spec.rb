@@ -44,6 +44,16 @@ describe Penkit::Docker do
     end
   end
  
+  describe "#run" do
+    let(:command) { %w(docker run --rm -it --label penkit=true --network penkit) }
+
+    it "calls docker run" do
+      expect(subject).to receive(:create_network!).ordered
+      expect(subject).to receive(:exec).ordered.with(*command, "penkit/cli:example", :a, :b, :c)
+      subject.run("cli:example", :a, :b, :c)
+    end
+  end
+
   describe "#start" do
     let(:command) { %w(docker run --detach --label penkit=true --network penkit) }
 

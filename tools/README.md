@@ -7,7 +7,7 @@ Library of lightweight pen testing tools.
 Usage:
 
 ```bash
-docker run --rm -it --net=host penkit/tools:metasploit
+docker run --rm -it --net=host penkit/cli:metasploit
 ```
 
 
@@ -16,7 +16,7 @@ docker run --rm -it --net=host penkit/tools:metasploit
 Usage:
 
 ```bash
-docker run --rm -it --net=host penkit/tools:sqlmap [options]
+docker run --rm -it --net=host penkit/cli:sqlmap [options]
 ```
 
 ## wpscan
@@ -24,5 +24,5 @@ docker run --rm -it --net=host penkit/tools:sqlmap [options]
 Usage:
 
 ```bash
-docker run --rm -it --net=host penkit/tools:wpscan [options]
+docker run --rm -it --net=host penkit/cli:wpscan [options]
 ```
