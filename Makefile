@@ -1,2 +1,2 @@
 gem: penkit.gemspec
-	gem build penkit
+	gem build penkit.gemspec
