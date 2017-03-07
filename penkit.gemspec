@@ -10,12 +10,12 @@ Gem::Specification.new do |s|
   s.authors = ["Don Humphreys", "Sam Lachance"]
   s.email = ["don@penkit.io", "sam@penkit.io"]
   s.homepage = "http://penkit.io"
-  #s.license = "MIT"
+  s.license = "MIT"
 
   s.add_dependency "thor", "~> 0.19.4"
   s.add_development_dependency "rspec", "~> 3.5"
 
   s.bindir = "bin"
-  s.files = Dir["{bin,lib}/**/*"]
+  s.files = Dir["{bin,lib}/**/*"] + ["LICENSE"]
   s.executables = %w(penkit)
 end
