@@ -36,4 +36,4 @@ RUN set -ex \
   && bundle install --without development coverage test \
   && apk del .build-deps
 
-CMD ["/usr/src/metasploit/msfconsole"]
+ENTRYPOINT ["/usr/src/metasploit/msfconsole", "--quiet", "--no-database"]
