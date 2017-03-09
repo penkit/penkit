@@ -3,17 +3,20 @@ module Penkit
     NETWORK = "penkit".freeze
     REPOSITORY = "penkit".freeze
 
+    def find_all_containers
+      IO.popen(["docker", "ps", "-aq", *filter_options]).readlines.map(&:strip)
+    end
+
+    def find_running_containers
+      IO.popen(["docker", "ps", "-q", *filter_options]).readlines.map(&:strip)
+    end
+
     def ps
       exec("docker", "ps", *filter_options)
     end
 
     def rm(*containers)
       exec("docker", "rm", "--force", *containers)
-    end
-
-    def rm_all
-      containers = find_all_containers
-      rm(*containers) if containers.any?
     end
 
     def run(image, *args)
@@ -30,23 +33,10 @@ module Penkit
       exec("docker", "stop", *containers)
     end
 
-    def stop_all
-      containers = find_running_containers
-      stop(*containers) if containers.any?
-    end
-
     private
 
     def create_network!
       system("docker", "network", "create", *network_options, out: File::NULL) unless network_exists?
-    end
-
-    def find_all_containers
-      IO.popen(["docker", "ps", "-aq", *filter_options]).readlines.map(&:strip)
-    end
-
-    def find_running_containers
-      IO.popen(["docker", "ps", "-q", *filter_options]).readlines.map(&:strip)
     end
 
     def network_exists?
