@@ -1,5 +1,7 @@
 FROM alpine:3.5
 
+COPY SQLMAP_LICENSE /
+
 RUN set -ex \
   && apk add --no-cache --virtual .run-deps \
     bash \

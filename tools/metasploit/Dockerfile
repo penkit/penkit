@@ -1,5 +1,7 @@
 FROM alpine:3.5
 
+COPY METASPLOIT_LICENSE /
+
 RUN set -ex \
   && echo -e "install: --no-document\nupdate: --no-document" >> /etc/gemrc \
   && apk add --no-cache --virtual .run-deps \
