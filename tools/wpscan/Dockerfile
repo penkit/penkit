@@ -1,5 +1,7 @@
 FROM alpine:3.5
 
+COPY WPSCAN_LICENSE /
+
 RUN set -ex \
   && echo -e "install: --no-document\nupdate: --no-document" >> /etc/gemrc \
   && apk add --no-cache --virtual .run-deps \
@@ -32,5 +34,5 @@ RUN set -ex \
   && apk del .build-deps \
   && /usr/src/wpscan/wpscan.rb --update --no-color
 
-ENTRYPOINT ["/usr/src/wpscan/wpscan.rb"]
+ENTRYPOINT ["/usr/src/wpscan/wpscan.rb", "--no-banner"]
 CMD ["--help"]
