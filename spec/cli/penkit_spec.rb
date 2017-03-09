@@ -4,11 +4,41 @@ describe Penkit::CLI do
     allow(Penkit::Docker).to receive(:new).and_return(docker)
   end
 
+  shared_examples "batch confirmation" do
+    context "with response of yes" do
+      let(:user_input) { "y" }
+
+      it "performs bulk action" do
+        expect(subject).to receive(:ask).once.with(message)
+        expect(docker).to receive(method).once.with(*containers)
+        subject.send(method)
+      end
+    end
+
+    context "with response of no" do
+      let(:user_input) { "n" }
+
+      it "does not perform bulk action" do
+        expect(subject).to receive(:ask).once.with(message)
+        expect(docker).not_to receive(method)
+        subject.send(method)
+      end
+    end
+
+    context "with blank response" do
+      let(:user_input) { "" }
+
+      it "does not perform bulk action" do
+        expect(subject).to receive(:ask).once.with(message)
+        expect(docker).not_to receive(method)
+        subject.send(method)
+      end
+    end
+  end
+
   it "is a thor CLI" do
     expect(subject).to be_a(Thor)
   end
-
-  # Main
 
   describe "#ps" do
     it "calls docker#ps" do
@@ -19,9 +49,31 @@ describe Penkit::CLI do
 
   describe "#rm" do
     context "without arguments" do
-      it "calls docker#rm_all" do
-        expect(docker).to receive(:rm_all).once.with(no_args)
-        subject.rm
+      before { allow(docker).to receive(:find_all_containers).and_return(containers) }
+      before { allow(subject).to receive(:ask).and_return(user_input) }
+      let(:method) { :rm }
+      let(:user_input) { nil }
+
+      context "given 0 containers" do
+        let(:containers) { [] }
+
+        it "does not perform bulk action" do
+          expect(subject).not_to receive(:ask)
+          expect(docker).not_to receive(method)
+          subject.send(method)
+        end
+      end
+
+      context "given 1 container" do
+        let(:containers) { [:a] }
+        let(:message) { "Are you sure you want to remove 1 container? [y/N]" }
+        include_examples "batch confirmation"
+      end
+
+      context "given multiple containers" do
+        let(:containers) { [:a, :b, :c] }
+        let(:message) { "Are you sure you want to remove 3 containers? [y/N]" }
+        include_examples "batch confirmation"
       end
     end
 
@@ -42,9 +94,31 @@ describe Penkit::CLI do
 
   describe "#stop" do
     context "without arguments" do
-      it "calls docker#stop_all" do
-        expect(docker).to receive(:stop_all).once.with(no_args)
-        subject.stop
+      before { allow(docker).to receive(:find_running_containers).and_return(containers) }
+      before { allow(subject).to receive(:ask).and_return(user_input) }
+      let(:method) { :stop }
+      let(:user_input) { nil }
+
+      context "given 0 containers" do
+        let(:containers) { [] }
+
+        it "does not perform bulk action" do
+          expect(subject).not_to receive(:ask)
+          expect(docker).not_to receive(method)
+          subject.send(method)
+        end
+      end
+
+      context "given 1 container" do
+        let(:containers) { [:a] }
+        let(:message) { "Are you sure you want to stop 1 container? [y/N]" }
+        include_examples "batch confirmation"
+      end
+
+      context "given multiple containers" do
+        let(:containers) { [:a, :b, :c] }
+        let(:message) { "Are you sure you want to stop 3 containers? [y/N]" }
+        include_examples "batch confirmation"
       end
     end
 
