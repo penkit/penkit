@@ -16,9 +16,10 @@ module Penkit
       end
     end
 
-    desc "start IMAGE", "Start penkit docker image"
+    desc "start [OPTIONS] IMAGE", "Start a penkit docker image"
+    option :name, desc: "Override name and hostname of container"
     def start(image)
-      docker.start(image)
+      docker.start(image, options.dup)
     end
 
     desc "stop [CONTAINER...]", "Stop penkit docker containers"

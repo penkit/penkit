@@ -86,9 +86,18 @@ describe Penkit::CLI do
   end
 
   describe "#start" do
-    it "calls docker#start" do
-      expect(docker).to receive(:start).once.with(:image_name)
-      subject.start(:image_name)
+    context "without arguments" do
+      it "calls docker#start" do
+        expect(docker).to receive(:start).once.with("image_name", {})
+        Penkit::CLI.start(%w(start image_name))
+      end
+    end
+
+    context "with --name" do
+      it "calls docker#start" do
+        expect(docker).to receive(:start).once.with("image_name", name: "test")
+        Penkit::CLI.start(%w(start image_name --name test))
+      end
     end
   end
 
