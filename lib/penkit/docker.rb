@@ -1,5 +1,6 @@
 module Penkit
   class Docker
+    IMAGE_REGEX = /^([^\s\/:]+)(:[^\s\/:]+)?$/
     NETWORK = "penkit".freeze
     REPOSITORY = "penkit".freeze
 
@@ -24,9 +25,11 @@ module Penkit
       exec("docker", "run", "--rm", "-it", *run_options, "#{REPOSITORY}/#{image}", *args)
     end
 
-    def start(image)
+    def start(image, options={})
       create_network!
-      exec("docker", "run", "--detach", *run_options, "#{REPOSITORY}/#{image}")
+      options[:name] ||= unique_name(image_name(image))
+      puts "Starting container #{options[:name]}"
+      exec("docker", "run", "--detach", *run_options(options), "#{REPOSITORY}/#{image}")
     end
 
     def stop(*containers)
@@ -37,6 +40,14 @@ module Penkit
 
     def create_network!
       system("docker", "network", "create", *network_options, out: File::NULL) unless network_exists?
+    end
+
+    def find_container_names
+      IO.popen(["docker", "ps", "-a", "--format", "{{.Names}}", *filter_options]).readlines.map(&:strip)
+    end
+
+    def image_name(image)
+      image[IMAGE_REGEX, 1]
     end
 
     def network_exists?
@@ -51,8 +62,19 @@ module Penkit
       %w(--filter label=penkit)
     end
 
-    def run_options
-      %w(--label penkit=true --network penkit)
+    def run_options(options={})
+      args = %w(--label penkit=true --network penkit)
+      args += ["--name", options[:name], "--hostname", options[:name]] if options[:name]
+      args
+    end
+
+    def unique_name(name)
+      name_list = find_container_names
+      100.times do |i|
+        return name unless name_list.include? name
+        name = [name[/^(.*\D)\d*$/, 1], i + 1].join
+      end
+      name
     end
   end
 end
