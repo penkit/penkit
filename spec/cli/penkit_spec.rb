@@ -132,6 +132,13 @@ describe Penkit::CLI do
 
   # Tools
 
+  describe "#curl" do
+    it "calls docker#run with arguments" do
+      expect(docker).to receive(:run).once.with("cli:curl", :a, :b, :c)
+      subject.curl(:a, :b, :c)
+    end
+  end
+
   describe "#metasploit" do
     it "calls docker#run with arguments" do
       expect(docker).to receive(:run).once.with("cli:metasploit", :a, :b, :c)

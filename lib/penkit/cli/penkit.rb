@@ -32,6 +32,11 @@ module Penkit
 
     # Tools
 
+    desc "curl [ARGS...]", "Run curl on the penkit docker network"
+    def curl(*args)
+      docker.run("cli:curl", *args)
+    end
+
     desc "metasploit [ARGS...]", "Run metasploit on the penkit docker network"
     def metasploit(*args)
       docker.run("cli:metasploit", *args)
