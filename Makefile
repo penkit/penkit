@@ -1,5 +1,5 @@
 GEM_VERSION = $(shell ruby -e "puts Penkit::VERSION" -r "./lib/penkit/version")
-TOOL_LIST := metasploit sqlmap wpscan
+TOOL_LIST := curl metasploit sqlmap wpscan
 
 gem: penkit.gemspec
 	gem build penkit.gemspec
