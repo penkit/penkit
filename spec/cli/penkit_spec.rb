@@ -1,7 +1,9 @@
 describe Penkit::CLI do
-  let(:docker) { double(:docker) }
+  let(:docker) { double(:docker, unique_name: "unique_name") }
+  let(:docker_compose) { double(:docker_compose) }
   before do
     allow(Penkit::Docker).to receive(:new).and_return(docker)
+    allow(Penkit::DockerCompose).to receive(:new).and_return(docker_compose)
   end
 
   shared_examples "batch confirmation" do
@@ -86,17 +88,47 @@ describe Penkit::CLI do
   end
 
   describe "#start" do
-    context "without arguments" do
-      it "calls docker#start" do
-        expect(docker).to receive(:start).once.with("image_name", {})
-        Penkit::CLI.start(%w(start image_name))
+    context "for standard image" do
+      before { allow(docker_compose).to receive(:has_config?).and_return(false) }
+
+      context "without arguments" do
+        it "calls docker#start" do
+          expect(docker_compose).to receive(:has_config?).once.with("image_name")
+          expect(docker_compose).not_to receive(:up)
+          expect(docker).to receive(:start).once.with("image_name", {})
+          Penkit::CLI.start(%w(start image_name))
+        end
+      end
+
+      context "with --name" do
+        it "calls docker#start" do
+          expect(docker_compose).to receive(:has_config?).once.with("image_name")
+          expect(docker_compose).not_to receive(:up)
+          expect(docker).to receive(:start).once.with("image_name", name: "test")
+          Penkit::CLI.start(%w(start image_name --name test))
+        end
       end
     end
 
-    context "with --name" do
-      it "calls docker#start" do
-        expect(docker).to receive(:start).once.with("image_name", name: "test")
-        Penkit::CLI.start(%w(start image_name --name test))
+    context "for compose image" do
+      before { allow(docker_compose).to receive(:has_config?).and_return(true) }
+
+      context "without arguments" do
+        it "calls docker_compose#up" do
+          expect(docker_compose).to receive(:has_config?).once.with("image_name")
+          expect(docker_compose).to receive(:up).once.with("image_name", name: "unique_name")
+          expect(docker).not_to receive(:start)
+          Penkit::CLI.start(%w(start image_name))
+        end
+      end
+
+      context "with --name" do
+        it "calls docker_compose#up" do
+          expect(docker_compose).to receive(:has_config?).once.with("image_name")
+          expect(docker_compose).to receive(:up).once.with("image_name", name: "test")
+          expect(docker).not_to receive(:start)
+          Penkit::CLI.start(%w(start image_name --name test))
+        end
       end
     end
   end
