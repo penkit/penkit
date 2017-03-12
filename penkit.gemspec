@@ -16,6 +16,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 3.5"
 
   s.bindir = "bin"
-  s.files = Dir["{bin,lib}/**/*"] + %w(LICENSE TERMS)
+  s.files = Dir["{bin,config,lib}/**/*"] + %w(LICENSE TERMS)
   s.executables = %w(penkit)
 end

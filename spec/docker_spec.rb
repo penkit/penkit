@@ -6,6 +6,29 @@ describe Penkit::Docker do
     allow(IO).to receive(:popen).and_return(double(:io, readlines: lines))
   end
 
+  describe "#create_network!" do
+    let(:command) { %w(docker network create --driver bridge penkit) }
+    let(:options) { { out: File::NULL } }
+
+    context "when network exists" do
+      before { allow(subject).to receive(:network_exists?).and_return(true) }
+
+      it "does nothing" do
+        expect(subject).not_to receive(:system)
+        subject.create_network!
+      end
+    end
+
+    context "when network does not exist" do
+      before { allow(subject).to receive(:network_exists?).and_return(false) }
+
+      it "calls docker network create" do
+        expect(subject).to receive(:system).once.with(*command, options)
+        subject.create_network!
+      end
+    end
+  end
+
   describe "#find_all_containers" do
     let(:command) { %w(docker ps -aq --filter label=penkit) }
 
@@ -85,7 +108,7 @@ describe Penkit::Docker do
 
       it "calls docker run with defaults" do
         expect(subject).to receive(:create_network!).ordered
-        expect(subject).to receive(:unique_name).ordered.with("rails").and_return("rails")
+        expect(subject).to receive(:unique_name).ordered.with("rails:latest").and_return("rails")
         expect(subject).to receive(:puts).ordered.with("Starting container rails")
         expect(subject).to receive(:exec).ordered.with(*command, "penkit/rails:latest")
         subject.start("rails:latest", options)
@@ -116,29 +139,6 @@ describe Penkit::Docker do
   end
 
   # private
-
-  describe "#create_network!" do
-    let(:command) { %w(docker network create --driver bridge penkit) }
-    let(:options) { { out: File::NULL } }
-
-    context "when network exists" do
-      before { allow(subject).to receive(:network_exists?).and_return(true) }
-
-      it "does nothing" do
-        expect(subject).not_to receive(:system)
-        subject.send(:create_network!)
-      end
-    end
-
-    context "when network does not exist" do
-      before { allow(subject).to receive(:network_exists?).and_return(false) }
-
-      it "calls docker network create" do
-        expect(subject).to receive(:system).once.with(*command, options)
-        subject.send(:create_network!)
-      end
-    end
-  end
 
   describe "#network_exists?" do
     let(:command) { %w(docker network inspect penkit) }

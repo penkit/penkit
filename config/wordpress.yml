@@ -1,0 +1,33 @@
+version: "2.0"
+services:
+  wordpress:
+    image: ${DOCKER_IMAGE}
+    container_name: ${DOCKER_NAME}
+    depends_on:
+      - mysql
+    environment:
+      WP_DB_HOST: ${DOCKER_NAME}_mysql
+      WP_DB_PORT: 3306
+      WP_DB_USER: wpuser
+      WP_DB_PASS: password
+      WP_DB_NAME: wpdb
+    labels:
+      penkit: "true"
+    networks:
+      penkit:
+
+  mysql:
+    image: penkit/mysql:latest
+    container_name: ${DOCKER_NAME}_mysql
+    environment:
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: wpdb
+    labels:
+      penkit: "true"
+    networks:
+      penkit:
+
+networks:
+  penkit:
+    external: true
