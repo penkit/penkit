@@ -19,7 +19,13 @@ module Penkit
     desc "start [OPTIONS] IMAGE", "Start a penkit docker image"
     option :name, desc: "Override name and hostname of container"
     def start(image)
-      docker.start(image, options.dup)
+      if docker_compose.has_config?(image)
+        opts = options.dup
+        opts[:name] ||= docker.unique_name(image)
+        docker_compose.up(image, opts)
+      else
+        docker.start(image, options.dup)
+      end
     end
 
     desc "stop [CONTAINER...]", "Stop penkit docker containers"
@@ -57,6 +63,10 @@ module Penkit
 
     def docker
       @docker ||= Penkit::Docker.new
+    end
+
+    def docker_compose
+      @docker_compose ||= Penkit::DockerCompose.new
     end
 
     def stop_all
