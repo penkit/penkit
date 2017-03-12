@@ -4,7 +4,6 @@ require "penkit/version"
 Gem::Specification.new do |s|
   s.name = "penkit"
   s.version = Penkit::VERSION
-  s.date = "2017-03-03"
   s.summary = "Penkit CLI"
   s.description = "Command-line interface for managing Penkit containers"
   s.authors = ["Don Humphreys", "Sam Lachance"]
