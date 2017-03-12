@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 N/A
 
+## [0.0.1.rc2]
+
+### Fixed
+
+- Removed hard-coded date in gemspec.
+
 ## 0.0.1.rc1 - 2017-03-11
 
 ### Added
@@ -25,4 +31,5 @@ N/A
 - README file with installation, usage, and contributing instructions.
 - Adopted MIT license for Penkit codebase.
 
-[Unreleased]: https://gitlab.com/penkit/penkit/compare/v0.0.1.rc1...master
+[Unreleased]: https://gitlab.com/penkit/penkit/compare/v0.0.1.rc2...master
+[0.0.1.rc2]: https://gitlab.com/penkit/penkit/compare/v0.0.1.rc1...v0.0.1.rc2
