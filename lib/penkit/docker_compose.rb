@@ -1,8 +1,8 @@
+require "penkit/helpers"
+
 module Penkit
   class DockerCompose
-    def has_config?(image)
-      File.exist?(config_file(image))
-    end
+    include Penkit::Helpers
 
     def up(image, options = {})
       docker.create_network!
@@ -16,22 +16,13 @@ module Penkit
 
     def compose_env(image, options={})
       {
-        "DOCKER_IMAGE" => docker.image_url(image),
+        "DOCKER_IMAGE" => image_url(image),
         "DOCKER_NAME" => options[:name]
       }
     end
 
     def compose_options(image, options={})
       ["-f", config_file(image), "-p", options[:name]]
-    end
-
-    def config_file(image)
-      root = File.expand_path("../../..", __FILE__)
-      File.join(root, "config", "#{docker.image_name(image)}.yml")
-    end
-
-    def docker
-      @docker ||= Penkit::Docker.new
     end
   end
 end
