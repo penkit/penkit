@@ -1,43 +1,15 @@
 describe Penkit::DockerCompose do
-  let(:docker) { double(:docker) }
-  before do
-    allow(Penkit::Docker).to receive(:new).and_return(docker)
-  end
+  stub_docker!
+  stub_system_calls!
 
-  let(:lines) { [] }
-  before do
-    allow(subject).to receive(:exec).and_return(true)
-    allow(subject).to receive(:system).and_return(true)
-    allow(IO).to receive(:popen).and_return(double(:io, readlines: lines))
-  end
-
-  describe "#has_config?" do
-    context "when config exists" do
-      before { allow(docker).to receive(:image_name).and_return("wordpress") }
-
-      it "returns true" do
-        expect(File).to receive(:exist?).once.with(/\/wordpress\.yml$/).and_call_original
-        expect(subject.has_config?("wordpress:4.7")).to eq(true)
-      end
-    end
-
-    context "when config does not exists" do
-      before { allow(docker).to receive(:image_name).and_return("missing") }
-
-      it "returns false" do
-        expect(File).to receive(:exist?).once.with(/\/missing\.yml$/).and_call_original
-        expect(subject.has_config?("missing:latest")).to eq(false)
-      end
-    end
+  it "includes helpers" do
+    expect(subject).to be_a(Penkit::Helpers)
   end
 
   describe "#up" do
     let(:env) { { "DOCKER_IMAGE" => "penkit/rails:latest", "DOCKER_NAME" => "custom2" } }
     let(:command) { %w(docker-compose -f path/to/rails.yml -p custom2 up -d) }
     let(:options) { { name: "custom2" } }
-
-    before { allow(docker).to receive(:image_name).and_return("rails") }
-    before { allow(docker).to receive(:image_url).and_return("penkit/rails:latest") }
 
     it "calls docker-compose up" do
       expect(docker).to receive(:create_network!).ordered

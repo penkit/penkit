@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-N/A
+### Changed
+
+- Refactored CLI into more manageable classes and specs.
 
 ## [0.0.1.rc2]
 
