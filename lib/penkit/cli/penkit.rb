@@ -9,5 +9,10 @@ require "penkit/cli/tools"
 module Penkit
   class CLI < Thor
     include Penkit::Helpers
+
+    desc "version", "Show current version"
+    def version
+      puts VERSION
+    end
   end
 end
