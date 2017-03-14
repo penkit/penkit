@@ -11,7 +11,11 @@ Gem::Specification.new do |s|
   s.homepage = "http://penkit.io"
   s.license = "MIT"
 
+  s.required_ruby_version = ">= 1.9.0"
+  s.required_rubygems_version = ">= 1.3.5"
+
   s.add_dependency "thor", "~> 0.19.4"
+  s.add_development_dependency "bundler", "~> 1.0"
   s.add_development_dependency "rspec", "~> 3.5"
 
   s.bindir = "bin"
