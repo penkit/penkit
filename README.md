@@ -1,5 +1,10 @@
 # penkit
 
+[![Gem Version](https://badge.fury.io/rb/penkit.svg)](https://badge.fury.io/rb/penkit)
+[![build status](https://gitlab.com/penkit/penkit/badges/master/build.svg)](https://gitlab.com/penkit/penkit/commits/master)
+[![coverage report](https://gitlab.com/penkit/penkit/badges/master/coverage.svg)](https://gitlab.com/penkit/penkit/commits/master)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](http://penkit.io/legal/LICENSE.txt)
+
 Penkit is a software suite designed to hone your pentesting skills. Using the power and flexibility of docker, we are able to build controlled, isolated environments for reproducing virtually any software vulnerability out there. Penkit has two major components: our strictly maintained image catalog and our full featured CLI application.
 
 ## Getting started
