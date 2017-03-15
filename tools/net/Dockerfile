@@ -8,6 +8,7 @@ RUN apk add --no-cache \
   netcat-openbsd \
   nfs-utils \
   nmap \
+  nmap-scripts \
   samba-client \
   rpcbind \
   wget
