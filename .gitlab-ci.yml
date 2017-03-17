@@ -1,13 +1,56 @@
-gem:
-  stage: "build"
-  image: "ruby:2.3-alpine"
+image: docker:1.13.1-alpine
+
+services:
+  - docker:1.13.1-dind
+
+stages:
+  - build
+  - test
+  - release
+
+variables:
+  DOCKER_TEST_IMAGE: registry.gitlab.com/penkit/cli:$CI_BUILD_REF_NAME
+
+before_script:
+  - docker -v
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+
+build:gem:
+  stage: build
+  image: ruby:2.3-alpine
   script:
-  - gem build penkit
+    - gem build penkit.gemspec
+  artifacts:
+    paths:
+      - penkit-*.gem
+
+build:docker:
+  stage: build
+  script:
+    - docker build -t $DOCKER_TEST_IMAGE .
+    - docker run --rm $DOCKER_TEST_IMAGE version
+    - docker push $DOCKER_TEST_IMAGE
 
 rspec:
-  stage: "test"
-  image: "ruby:2.3-alpine"
+  stage: test
+  image: ruby:2.3-alpine
+  before_script:
+    - apk add --no-cache ruby ruby-bundler
+    - ruby -v
   script:
-  - ruby -v
-  - bundle install
-  - bundle exec rspec
+    - bundle install
+    - bundle exec rspec
+
+release:docker:
+  stage: release
+  variables:
+    DOCKER_RELEASE_IMAGE: penkit/cli:
+  before_script:
+    - docker login -u penkitci -p $DOCKER_PASSWORD
+  script:
+    - docker pull $DOCKER_TEST_IMAGE
+    - export DOCKER_RELEASE_IMAGE=penkit/cli:$(docker run --rm $DOCKER_TEST_IMAGE version)
+    - docker tag $DOCKER_TEST_IMAGE $DOCKER_RELEASE_IMAGE
+    - docker push penkit/cli
+  only:
+    - tags
