@@ -1,5 +1,10 @@
 # penkit
 
+[![Gem Version](https://badge.fury.io/rb/penkit.svg)](https://badge.fury.io/rb/penkit)
+[![build status](https://gitlab.com/penkit/penkit/badges/master/build.svg)](https://gitlab.com/penkit/penkit/commits/master)
+[![coverage report](https://gitlab.com/penkit/penkit/badges/master/coverage.svg)](https://gitlab.com/penkit/penkit/commits/master)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](http://penkit.io/legal/LICENSE.txt)
+
 Penkit is a software suite designed to hone your pentesting skills. Using the power and flexibility of docker, we are able to build controlled, isolated environments for reproducing virtually any software vulnerability out there. Penkit has two major components: our strictly maintained image catalog and our full featured CLI application.
 
 ## Getting started
@@ -14,16 +19,24 @@ Penkit has only a couple of requirements and three different install options.
 
 ### Installation
 
-#### Option 1: Ruby gem
+#### Option 1: Quick install
+
+Try our easy install script. ([view source](http://get.penkit.io))
+
+```bash
+$ wget -qO- http://get.penkit.io | sh
+```
+
+#### Option 2: Ruby gem
 
 You can install the penkit gem directly from [rubygems.org](https://rubygems.org/gems/penkit):
 
-```
+```bash
 $ gem install penkit
 $ penkit help
 ```
 
-#### Option 2: Docker image
+#### Option 3: Docker image
 
 If you don't have ruby, then you can use the penkit Docker image:
 
@@ -31,7 +44,7 @@ If you don't have ruby, then you can use the penkit Docker image:
 $ docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock penkit/cli help
 ```
 
-#### Option 3: Bash wrapper
+#### Option 4: Bash wrapper
 
 If docker commands are a hassle to you, just download our bash wrapper:
 

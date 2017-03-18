@@ -14,6 +14,7 @@ RUN set -ex \
     libxml2 \
     ncurses \
     nmap \
+    nmap-scripts \
     openssl \
     postgresql-libs \
     readline \

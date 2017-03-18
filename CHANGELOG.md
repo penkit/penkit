@@ -5,11 +5,26 @@ All notable changes to Penkit will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.0.1] - 2017-03-18
 
-N/A
+### Added
 
-## [0.0.1.rc2]
+- New `version` command that prints current penkit version.
+- New tool commands: `ftp`, `netcat`, `nmap`, `ping`, `rpcinfo`, `showmount`, `smbclient`, and `wget`.
+- Added several badges and "quick install" guide to README.
+
+### Changed
+
+- Incorporated `curl` tool into new multi-use `net` tool.
+- Replaced `penkit/cli:curl` image with `penkit/cli:net`.
+- Refactored CLI into more manageable classes and specs.
+
+### Fixed
+
+- Added missing package `nmap-scripts` for version detection.
+- Restricted Ruby version to `>= 1.9.0` in gemspec
+
+## [0.0.1.rc2] - 2017-03-12
 
 ### Fixed
 
@@ -31,5 +46,6 @@ N/A
 - README file with installation, usage, and contributing instructions.
 - Adopted MIT license for Penkit codebase.
 
-[Unreleased]: https://gitlab.com/penkit/penkit/compare/v0.0.1.rc2...master
+[Unreleased]: https://gitlab.com/penkit/penkit/compare/v0.0.1...master
+[0.0.1]: https://gitlab.com/penkit/penkit/compare/v0.0.1.rc2...v0.0.1
 [0.0.1.rc2]: https://gitlab.com/penkit/penkit/compare/v0.0.1.rc1...v0.0.1.rc2
