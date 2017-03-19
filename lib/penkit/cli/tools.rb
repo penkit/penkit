@@ -18,7 +18,6 @@ module Penkit
     end
 
     desc "netcat [ARGS...]", "Run netcat on the penkit docker network"
-    
     def netcat(*args)
       docker.run("cli:net", "nc", *args)
     end
