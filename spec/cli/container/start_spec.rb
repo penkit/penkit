@@ -12,6 +12,7 @@ describe Penkit::CLI do
 
       context "without arguments" do
         it "calls docker#start" do
+          expect(docker).to receive(:pull).with("image_name")
           expect(subject).to receive(:has_config?).once.with("image_name")
           expect(docker_compose).not_to receive(:up)
           expect(docker).to receive(:start).once.with("image_name", {})
@@ -23,6 +24,7 @@ describe Penkit::CLI do
         let(:options) { { name: "test" } }
 
         it "calls docker#start" do
+          expect(docker).to receive(:pull).with("image_name")
           expect(subject).to receive(:has_config?).once.with("image_name")
           expect(docker_compose).not_to receive(:up)
           expect(docker).to receive(:start).once.with("image_name", name: "test")
@@ -36,6 +38,7 @@ describe Penkit::CLI do
 
       context "without arguments" do
         it "calls docker_compose#up" do
+          expect(docker).to receive(:pull).with("image_name")
           expect(subject).to receive(:has_config?).once.with("image_name")
           expect(subject).to receive(:unique_name).once.with("image_name")
           expect(docker_compose).to receive(:up).once.with("image_name", name: "unique_name")
@@ -48,6 +51,7 @@ describe Penkit::CLI do
         let(:options) { { name: "test" } }
 
         it "calls docker_compose#up" do
+          expect(docker).to receive(:pull).with("image_name")
           expect(subject).to receive(:has_config?).once.with("image_name")
           expect(subject).not_to receive(:unique_name)
           expect(docker_compose).to receive(:up).once.with("image_name", name: "test")

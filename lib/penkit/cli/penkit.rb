@@ -4,6 +4,7 @@ require "penkit/cli/container/ps"
 require "penkit/cli/container/rm"
 require "penkit/cli/container/start"
 require "penkit/cli/container/stop"
+require "penkit/cli/container/pull"
 require "penkit/cli/tools"
 
 module Penkit
