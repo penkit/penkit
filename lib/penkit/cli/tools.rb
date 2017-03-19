@@ -18,11 +18,13 @@ module Penkit
     end
 
     desc "netcat [ARGS...]", "Run netcat on the penkit docker network"
+    
     def netcat(*args)
       docker.run("cli:net", "nc", *args)
     end
 
-    map :nc => :netcat # Alias for netcat
+    desc "nc [ARGS...]", "Run netcat on the penkit docker network"
+    alias_method :nc, :netcat
 
     desc "nmap [ARGS...]", "Run nmap on the penkit docker network"
     def nmap(*args)

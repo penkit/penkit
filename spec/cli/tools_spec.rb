@@ -29,6 +29,13 @@ describe Penkit::CLI do
     end
   end
 
+  describe "#nc" do
+    it "calls docker#run with arguments" do
+      expect(docker).to receive(:run).once.with("cli:net", "nc", :a, :b, :c)
+      subject.nc(:a, :b, :c)
+    end
+  end
+
   describe "#nmap" do
     it "calls docker#run with arguments" do
       expect(docker).to receive(:run).once.with("cli:net", "nmap", :a, :b, :c)
