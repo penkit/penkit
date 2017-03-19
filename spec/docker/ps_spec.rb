@@ -68,10 +68,10 @@ describe Penkit::Docker do
   end
   
   describe "#ps" do
-    let(:command) { ["docker", "ps", "--filter", "label=penkit", :a, :b, :c] }
+    let(:command) { %w(docker ps --filter label=penkit) }
 
     it "calls docker ps" do
-      expect(subject).to receive(:exec).once.with(*command)
+      expect(subject).to receive(:exec).once.with(*command, :a, :b, :c)
       subject.ps(:a, :b, :c)
     end
   end
