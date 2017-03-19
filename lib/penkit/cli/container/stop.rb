@@ -1,9 +1,10 @@
 module Penkit
   class CLI < Thor
     desc "stop [CONTAINER...]", "Stop penkit docker containers"
+    method_option :force, :type => :boolean, :aliases => ["-f", "--force"]
     def stop(*containers)
       if containers.any?
-        docker.stop(*containers)
+        docker.stop(options[:force], *containers)
       else
         stop_all
       end
@@ -13,7 +14,7 @@ module Penkit
 
     def stop_all
       containers = docker.find_running_containers
-      docker.stop(*containers) if stop_all?(containers)
+      docker.stop(options[:force], *containers) if stop_all?(containers)
     end
 
     def stop_all?(containers)
