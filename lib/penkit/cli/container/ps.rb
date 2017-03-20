@@ -1,8 +1,8 @@
 module Penkit
   class CLI < Thor
-    desc "ps", "List penkit docker containers"
-    def ps
-      docker.ps
+    desc "ps [ARGS...]", "List penkit docker containers"
+    def ps(*args)
+      docker.ps(*args)
     end
   end
 end
