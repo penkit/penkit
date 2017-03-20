@@ -34,5 +34,6 @@ RUN set -ex \
   && apk del .build-deps \
   && /usr/src/wpscan/wpscan.rb --update --no-color
 
-ENTRYPOINT ["/usr/src/wpscan/wpscan.rb", "--no-banner"]
+COPY wpscan-entrypoint.sh /usr/local/sbin/
+ENTRYPOINT ["/usr/local/sbin/wpscan-entrypoint.sh"]
 CMD ["--help"]
