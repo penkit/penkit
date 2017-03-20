@@ -12,8 +12,8 @@ module Penkit
       IO.popen(["docker", "ps", "-q", *filter_options]).readlines.map(&:strip)
     end
 
-    def ps
-      exec("docker", "ps", *filter_options)
+    def ps(*args)
+      exec("docker", "ps", *filter_options, *args)
     end
 
     private
