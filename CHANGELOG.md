@@ -5,6 +5,22 @@ All notable changes to Penkit will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Additional arguments to `ps` command are forwarded to docker.
+- New `--force` option for `stop` and `rm` commands.
+- New `pull` command that pulls the latest version of target image.
+
+### Changed
+
+- The `start` command now automatically pulls latest version of target image.
+
+### Fixed
+
+- Keep `wpscan` command from prompting user to update wpscan database.
+
 ## [0.0.1] - 2017-03-18
 
 ### Added

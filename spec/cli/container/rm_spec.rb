@@ -31,9 +31,22 @@ describe Penkit::CLI do
         subject.send(method)
       end
     end
+
+    context "with --force" do
+      let(:options) { { force: true } }
+
+      it "does not prompt before bulk action" do
+        expect(subject).not_to receive(:ask)
+        expect(docker).to receive(method).once.with(*containers)
+        subject.send(method)
+      end
+    end
   end
 
   describe "#rm" do
+    let(:options) { {} }
+    before { subject.options = options }
+
     context "without arguments" do
       before { allow(docker).to receive(:find_all_containers).and_return(containers) }
       before { allow(subject).to receive(:ask).and_return(user_input) }
