@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Additional arguments to `ps` command are forwarded to docker.
 - New `--force` option for `stop` and `rm` commands.
 - New `pull` command that pulls the latest version of target image.
+- Config file for running `php` sql injection application with mysql.
 
 ### Changed
 
