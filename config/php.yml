@@ -1,0 +1,32 @@
+version: "2.0"
+services:
+  wordpress:
+    image: ${DOCKER_IMAGE}
+    container_name: ${DOCKER_NAME}
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: ${DOCKER_NAME}_mysql
+      MYSQL_USER: phpuser
+      MYSQL_PASSWORD: password
+      MYSQL_NAME: phpdb
+    labels:
+      penkit: "true"
+    networks:
+      penkit:
+
+  mysql:
+    image: penkit/mysql:latest
+    container_name: ${DOCKER_NAME}_mysql
+    environment:
+      MYSQL_USER: phpuser
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: phpdb
+    labels:
+      penkit: "true"
+    networks:
+      penkit:
+
+networks:
+  penkit:
+    external: true
