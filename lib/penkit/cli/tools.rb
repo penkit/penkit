@@ -17,10 +17,12 @@ module Penkit
       docker.run("cli:metasploit", *args)
     end
 
-    desc "netcat [ARGS...]", "Run netcat on the penkit docker network"
+    desc "nc|netcat [ARGS...]", "Run netcat on the penkit docker network"
     def netcat(*args)
       docker.run("cli:net", "nc", *args)
     end
+
+    map "nc" => "netcat"
 
     desc "nmap [ARGS...]", "Run nmap on the penkit docker network"
     def nmap(*args)

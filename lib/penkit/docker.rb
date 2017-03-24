@@ -4,6 +4,7 @@ require "penkit/docker/ps"
 require "penkit/docker/rm"
 require "penkit/docker/start"
 require "penkit/docker/stop"
+require "penkit/docker/pull"
 
 module Penkit
   class Docker

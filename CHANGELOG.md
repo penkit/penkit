@@ -5,6 +5,24 @@ All notable changes to Penkit will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.0.2] - 2017-03-24
+
+### Added
+
+- Additional arguments to `ps` command are forwarded to docker.
+- New `--force` option for `stop` and `rm` commands.
+- New `pull` command that pulls the latest version of target image.
+- Config file for running `php` sql injection application with mysql.
+
+### Changed
+
+- The `start` command now automatically pulls latest version of target image.
+
+### Fixed
+
+- Added missing executable `docker-compose` to docker image.
+- Keep `wpscan` command from prompting user to update wpscan database.
+
 ## [0.0.1] - 2017-03-18
 
 ### Added
@@ -18,6 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Incorporated `curl` tool into new multi-use `net` tool.
 - Replaced `penkit/cli:curl` image with `penkit/cli:net`.
 - Refactored CLI into more manageable classes and specs.
+- Changed copy in install instructions from `http` to `https`.
 
 ### Fixed
 
@@ -46,6 +65,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - README file with installation, usage, and contributing instructions.
 - Adopted MIT license for Penkit codebase.
 
-[Unreleased]: https://gitlab.com/penkit/penkit/compare/v0.0.1...master
+[Unreleased]: https://gitlab.com/penkit/penkit/compare/v0.0.2...master
+[0.0.2]: https://gitlab.com/penkit/penkit/compare/v0.0.1...v0.0.2
 [0.0.1]: https://gitlab.com/penkit/penkit/compare/v0.0.1.rc2...v0.0.1
 [0.0.1.rc2]: https://gitlab.com/penkit/penkit/compare/v0.0.1.rc1...v0.0.1.rc2
