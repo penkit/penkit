@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Incorporated `curl` tool into new multi-use `net` tool.
 - Replaced `penkit/cli:curl` image with `penkit/cli:net`.
 - Refactored CLI into more manageable classes and specs.
+- Changed copy in install instructions from `http` to `https`.
 
 ### Fixed
 

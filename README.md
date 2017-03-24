@@ -21,10 +21,10 @@ Penkit has only a couple of requirements and three different install options.
 
 #### Option 1: Quick install
 
-Try our easy install script. ([view source](http://get.penkit.io))
+Try our easy install script. ([view source](https://get.penkit.io))
 
 ```bash
-$ wget -qO- http://get.penkit.io | sh
+$ wget -qO- https://get.penkit.io | sh
 ```
 
 #### Option 2: Ruby gem
