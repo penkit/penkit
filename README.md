@@ -50,7 +50,7 @@ If docker commands are a hassle to you, just download our bash wrapper:
 
 ```bash
 $ wget -O /usr/local/bin/penkit https://gitlab.com/penkit/penkit/raw/master/scripts/penkit
-$ chmod +x penkit
+$ chmod +x /usr/local/bin/penkit
 $ penkit  help
 ```
 
