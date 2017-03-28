@@ -1,0 +1,33 @@
+version: "2.0"
+services:
+  drupal:
+    image: ${DOCKER_IMAGE}
+    container_name: ${DOCKER_NAME}
+    depends_on:
+      - mysql
+    environment:
+      DRUPAL_DB_HOST: ${DOCKER_NAME}_mysql
+      DRUPAL_DB_PORT: 3306
+      DRUPAL_DB_USER: dpuser
+      DRUPAL_DB_PASS: password
+      DRUPAL_DB_NAME: dpdb
+    labels:
+      penkit: "true"
+    networks:
+      penkit:
+
+  mysql:
+    image: penkit/mysql:latest
+    container_name: ${DOCKER_NAME}_mysql
+    environment:
+      MYSQL_USER: dpuser
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: dpdb
+    labels:
+      penkit: "true"
+    networks:
+      penkit:
+
+networks:
+  penkit:
+    external: true
